@@ -9,7 +9,21 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Prathamesh Bhandekar | Portfolio website",
-  description: "Portfolio website for Prathamesh Bhandekar , a computer science major and AI enthusiast ",
+  description: "Portfolio website for Prathamesh Bhandekar, a computer science major and AI enthusiast",
+  openGraph: {
+    title: "Prathamesh Bhandekar | Portfolio website",
+    description: "Portfolio website for Prathamesh Bhandekar, a computer science major and AI enthusiast",
+    url: "https://bprathamesh.com",
+    siteName: "Prathamesh Bhandekar",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Prathamesh Bhandekar | Portfolio website",
+    description: "Portfolio website for Prathamesh Bhandekar, a computer science major and AI enthusiast",
+    creator: "@impra20",
+  },
 };
 
 export default function RootLayout({

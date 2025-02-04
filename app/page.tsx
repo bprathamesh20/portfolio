@@ -75,17 +75,17 @@ export default function Portfolio() {
   )
 }
 
-function ExperienceItem({ icon, company, role }: { icon: string; company: string; role: string }) {
-  return (
-    <div className="flex items-center gap-4">
-      <Image src={icon || "/placeholder.svg"} alt={company} width={40} height={40} className="rounded-lg" />
-      <div>
-        <h3 className="font-medium">{company}</h3>
-        <p className="text-sm text-gray-400">{role}</p>
-      </div>
-    </div>
-  )
-}
+// function ExperienceItem({ icon, company, role }: { icon: string; company: string; role: string }) {
+//   return (
+//     <div className="flex items-center gap-4">
+//       <Image src={icon || "/placeholder.svg"} alt={company} width={40} height={40} className="rounded-lg" />
+//       <div>
+//         <h3 className="font-medium">{company}</h3>
+//         <p className="text-sm text-gray-400">{role}</p>
+//       </div>
+//     </div>
+//   )
+// }
 
 function SocialLink({ href, icon }: { href: string; icon: React.ReactNode }) {
   return (
