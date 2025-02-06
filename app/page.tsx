@@ -54,7 +54,7 @@ export default function Portfolio() {
             title="Syallabus AI"
             description="300+ active users"
             subtitle="AI generated notes and tests."
-            link="https://vercel.com/bprathamesh20s-projects/syllabusai-frontend-pkxj/4AGkPM9Zct1aUNsoSUSZ16kM6oav"
+            link="https://syllabusai-frontend-pkxj-git-main-bprathamesh20s-projects.vercel.app/"
           />
           <ProjectCard
             image="/medipal-ai.png"
