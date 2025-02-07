@@ -3,6 +3,7 @@ import { Github, Linkedin, Twitter, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import type React from "react" // Import React
 import Link from "next/link"
+import { BlurFade } from "@/components/magicui/blur-fade"
 
 export default function Portfolio() {
   return (
@@ -42,33 +43,41 @@ export default function Portfolio() {
 
         {/* Right Column - Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 overflow-auto">
-          <ProjectCard
-            image="/cafi-show.png"
-            title="Cafi AI"
-            description="AI interview agent"
-            subtitle="An AI agent that can conduct interview autonomously"
-            link="https://cafi-landing-page.vercel.app/"
-          />
-          <ProjectCard
-            image="/syllabus-ai.png"
-            title="Syallabus AI"
-            description="300+ active users"
-            subtitle="AI generated notes and tests."
-            link="https://syllabusai-frontend-pkxj-git-main-bprathamesh20s-projects.vercel.app/"
-          />
-          <ProjectCard
-            image="/medipal-ai.png"
-            title="Medipal"
-            description="COMSYS-hackathon runner up"
-            subtitle="Medical report analyser"
-            link="https://medipal-ai-frontend.vercel.app/"
-          />
-          <ProjectCard
-            image="/expertex.png"
-            title="Expertex"
-            description="Expertise Exchnage platform"
-            link="https://expertex-7rdx.vercel.app/"
-          />
+          <BlurFade delay={0.2} inView>
+            <ProjectCard
+              image="/cafi-show.png"
+              title="Cafi AI"
+              description="AI interview agent"
+              subtitle="An AI agent that can conduct interview autonomously"
+              link="https://cafi-landing-page.vercel.app/"
+            />
+          </BlurFade>
+          <BlurFade delay={0.4} inView>
+            <ProjectCard
+              image="/syllabus-ai.png"
+              title="Syallabus AI"
+              description="300+ active users"
+              subtitle="AI generated notes and tests."
+              link="https://syllabusai-frontend-pkxj-git-main-bprathamesh20s-projects.vercel.app/"
+            />
+          </BlurFade>
+          <BlurFade delay={0.6} inView>
+            <ProjectCard
+              image="/medipal-ai.png"
+              title="Medipal"
+              description="COMSYS-hackathon runner up"
+              subtitle="Medical report analyser"
+              link="https://medipal-ai-frontend.vercel.app/"
+            />
+          </BlurFade>
+          <BlurFade delay={0.8} inView>
+            <ProjectCard
+              image="/expertex.png"
+              title="Expertex"
+              description="Expertise Exchnage platform"
+              link="https://expertex-7rdx.vercel.app/"
+            />
+          </BlurFade>
         </div>
       </div>
     </div>
