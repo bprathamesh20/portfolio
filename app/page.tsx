@@ -37,7 +37,7 @@ export default function Portfolio() {
             <SocialLink href="https://github.com/bprathamesh20" icon={<Github className="h-6 w-6" />} />
             <SocialLink href="https://www.linkedin.com/in/prathamesh-bhandekar/" icon={<Linkedin className="h-6 w-6" />} />
             <SocialLink href="https://x.com/impra20" icon={<Twitter className="h-6 w-6" />} />
-            <SocialLink href="mailto:bprathamesh.com" icon={<Mail className="h-6 w-6" />} />
+            <SocialLink href="mailto:bprathamesh2003@gmail.com" icon={<Mail className="h-6 w-6" />} />
           </div>
         </div>
 
