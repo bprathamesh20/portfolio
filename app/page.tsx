@@ -8,8 +8,9 @@ import { BlurFade } from "@/components/magicui/blur-fade"
 export default function Portfolio() {
   return (
     <div className="min-h-screen  bg-black text-white p-6 md:p-12 lg:p-16">
-      <div className="max-w-8xl  mx-auto grid grid-cols-1 lg:grid-cols-[1fr,1.5fr] gap-12">
-        {/* Left Column - Bio Section */}
+      {/* Make the grid container take full height, adjusting for padding */}
+      <div className="max-w-8xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr,1.5fr] gap-12 lg:h-[calc(100vh-8rem)]">
+        {/* Left Column - Bio Section (Stays fixed height based on content) */}
         <div className="space-y-8">
           <div className="space-y-4">
             <h1 className="text-4xl font-bold leading-tight">Prathamesh Bhandekar</h1>
@@ -41,9 +42,18 @@ export default function Portfolio() {
           </div>
         </div>
 
-        {/* Right Column - Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 overflow-auto">
+        {/* Right Column - Projects Grid (Scrollable with hidden scrollbar) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 overflow-y-auto scrollbar-hide h-full">
           <BlurFade delay={0.2} inView>
+            <ProjectCard
+              image="/gennotes.png"
+              title="GenNotes"
+              description="AI notes agent"
+              subtitle="Generates notes with relevant diagrams by searching, researching, and compiling various sources on the web."
+              link="https://gennotes-frontend.vercel.app/"
+            />
+          </BlurFade>
+          <BlurFade delay={0.4} inView>
             <ProjectCard
               image="/cafi-show.png"
               title="Cafi AI"
@@ -52,7 +62,7 @@ export default function Portfolio() {
               link="https://cafi-landing-page.vercel.app/"
             />
           </BlurFade>
-          <BlurFade delay={0.4} inView>
+          <BlurFade delay={0.6} inView>
             <ProjectCard
               image="/syllabus-ai.png"
               title="Syallabus AI"
@@ -61,7 +71,7 @@ export default function Portfolio() {
               link="https://syllabusai-frontend-pkxj-git-main-bprathamesh20s-projects.vercel.app/"
             />
           </BlurFade>
-          <BlurFade delay={0.6} inView>
+          <BlurFade delay={0.8} inView>
             <ProjectCard
               image="/medipal-ai.png"
               title="Medipal"
@@ -70,7 +80,7 @@ export default function Portfolio() {
               link="https://medipal-ai-frontend.vercel.app/"
             />
           </BlurFade>
-          <BlurFade delay={0.8} inView>
+          <BlurFade delay={1.0} inView>
             <ProjectCard
               image="/expertex.png"
               title="Expertex"
