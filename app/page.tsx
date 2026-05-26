@@ -14,7 +14,7 @@ export default function Portfolio() {
           <div className="space-y-4">
             <h1 className="text-4xl font-bold leading-tight">Prathamesh Bhandekar</h1>
             <p className="text-gray-400">
-              Full-stack engineer and AI developer.{" "}
+              Full-stack engineer and AI developer{" "}
               <span className="underline hover:text-white">
                 Computer Science @ MMIT, Pune.
               </span>
