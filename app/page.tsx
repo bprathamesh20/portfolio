@@ -2,12 +2,11 @@ import Image from "next/image"
 import { Github, Linkedin, Twitter, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import type React from "react" // Import React
-import Link from "next/link"
 import { BlurFade } from "@/components/magicui/blur-fade"
 
 export default function Portfolio() {
   return (
-    <div className="min-h-screen  bg-black text-white p-6 md:p-12 lg:p-16">
+    <main className="min-h-screen  bg-black text-white p-6 md:p-12 lg:p-16">
       {/* Make the grid container take full height, adjusting for padding */}
       <div className="max-w-8xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr,1.5fr] gap-12 lg:h-[calc(100vh-8rem)]">
         {/* Left Column - Bio Section (Stays fixed height based on content) */}
@@ -15,11 +14,10 @@ export default function Portfolio() {
           <div className="space-y-4">
             <h1 className="text-4xl font-bold leading-tight">Prathamesh Bhandekar</h1>
             <p className="text-gray-400">
-              Full stack engineer and AI enthusiast{" "}
-              <p  className="underline hover:text-white">
+              Full-stack engineer and AI developer.{" "}
+              <span className="underline hover:text-white">
                 Computer Science @ MMIT, Pune.
-              </p>
-          
+              </span>
             </p>
             <p className="text-gray-400">
             Full-stack by day ☀️, AI explorer by night 🌓 —turning ideas into reality
@@ -28,11 +26,15 @@ export default function Portfolio() {
 
           {/* Experience Section */}
           
-          <Link href={"https://docs.google.com/document/d/1NeMfQZNBlU3XZY0BpBPZb-3asJHL8ukWSYfjFwD_pdM/edit?usp=sharing"} >
+          <a
+            href="https://docs.google.com/document/d/1NeMfQZNBlU3XZY0BpBPZb-3asJHL8ukWSYfjFwD_pdM/edit?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
           <Button variant="link" className="text-gray-400 hover:text-white p-0 mt-4">
             Click here for resume →
           </Button>
-          </Link>
+          </a>
           {/* Social Links */}
           <div className="flex gap-4">
             <SocialLink href="https://github.com/bprathamesh20" icon={<Github className="h-6 w-6" />} />
@@ -44,6 +46,7 @@ export default function Portfolio() {
 
         {/* Right Column - Projects Grid (Scrollable with hidden scrollbar) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 overflow-y-auto scrollbar-hide h-full">
+          <h2 className="sr-only">Projects</h2>
           <BlurFade delay={0.2} inView>
             <ProjectCard
               image="/gennotes.png"
@@ -65,7 +68,7 @@ export default function Portfolio() {
           <BlurFade delay={0.6} inView>
             <ProjectCard
               image="/syllabus-ai.png"
-              title="Syallabus AI"
+              title="Syllabus AI"
               description="300+ active users"
               subtitle="AI generated notes and tests."
               link="https://syllabusai-frontend-pkxj-git-main-bprathamesh20s-projects.vercel.app/"
@@ -84,13 +87,13 @@ export default function Portfolio() {
             <ProjectCard
               image="/expertex.png"
               title="Expertex"
-              description="Expertise Exchnage platform"
+              description="Expertise Exchange platform"
               link="https://expertex-7rdx.vercel.app/"
             />
           </BlurFade>
         </div>
       </div>
-    </div>
+    </main>
   )
 }
 
@@ -133,12 +136,12 @@ function ProjectCard({
   link:string
 }) {
   return (
-    <Link href={link}>
+    <a href={link} target="_blank" rel="noopener noreferrer">
     <div className="space-y-3">
       <div className="group relative aspect-video overflow-hidden rounded-lg bg-gray-900">
         <Image
           src={image}
-          alt={title}
+          alt={subtitle ? `${title} — ${subtitle}` : `${title} — ${description}`}
           fill
           className="object-cover transition-transform group-hover:scale-105"
         />
@@ -149,7 +152,7 @@ function ProjectCard({
         {subtitle && <p className="text-sm text-gray-400">{subtitle}</p>}
       </div>
     </div>
-    </Link>
+    </a>
   )
 }
 
