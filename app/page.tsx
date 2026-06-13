@@ -17,17 +17,16 @@ export default function Portfolio() {
               <span className="h-1.5 w-1.5 rounded-full bg-primary" />
               Full-stack · AI
             </p>
-            <h1 className="text-4xl md:text-5xl font-light leading-[1.05] tracking-[-0.03em]">
+            <h1 className="text-4xl md:text-5xl font-bold leading-[1.05] tracking-[-0.03em]">
               Prathamesh Bhandekar
             </h1>
-            <p className="text-muted-foreground">
-              Full stack engineer and AI enthusiast{" "}
-              <span className="text-foreground underline decoration-border underline-offset-4 transition-colors hover:decoration-primary">
-                Computer Science @ MMIT, Pune.
-              </span>
+            <p className="text-foreground">
+              Full-stack engineer building AI agents that ship to production.
             </p>
             <p className="text-muted-foreground">
-              Full-stack by day ☀️, AI explorer by night 🌓 —turning ideas into reality
+              I work across the stack — LLM orchestration, RAG, and the interfaces that
+              make agents usable. I care about systems that stay reliable, observable,
+              and cheap to run once real traffic hits.
             </p>
           </div>
 
