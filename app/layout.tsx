@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Loader } from "@/components/loader";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -90,6 +91,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
+        <Loader />
         {children}
       </body>
     </html>
