@@ -163,7 +163,7 @@ function ProjectCard({
           </span>
         </div>
         <div className="space-y-0.5">
-          <h3 className="font-medium text-lg transition-colors group-hover:text-primary">{title}</h3>
+          <h3 className="font-medium text-lg">{title}</h3>
           {description && <p className="font-mono text-xs uppercase tracking-wider text-primary/90">{description}</p>}
           {subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
         </div>
