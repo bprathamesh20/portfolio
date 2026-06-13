@@ -1,0 +1,29 @@
+---
+title: "Building this portfolio"
+date: "2026-06-04"
+summary: "Notes on the stack behind this site and why I keep the blog as MDX in the repo."
+tags: ["nextjs", "meta"]
+---
+
+This is the first post on my new dev blog. I'm writing it to test the pipeline, so it's deliberately plain.
+
+## The stack
+
+The site runs on Next.js with the App Router, Tailwind for styling, and a small set of design tokens adapted to a dark, coral-accented theme. Posts like this one live as MDX files committed alongside the code.
+
+## Why MDX in the repo
+
+There's no database and no CMS. A post is just a file with some frontmatter at the top and Markdown below it. To publish, I write a file and push. Everything stays version-controlled with the rest of the site.
+
+Here's the shape of the helper that reads these posts:
+
+```ts
+export function getAllPosts(): PostMeta[] {
+  return getPostSlugs()
+    .map((slug) => getPostBySlug(slug)?.meta)
+    .filter(Boolean)
+    .sort((a, b) => (a.date < b.date ? 1 : -1))
+}
+```
+
+That's the whole idea. More posts to come.

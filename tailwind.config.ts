@@ -59,9 +59,9 @@ export default {
   		},
   		fontFamily: {
   			sans: ['Satoshi', 'sans-serif'],
-  			mono: ['var(--font-geist-mono)'],
+  			mono: ['var(--font-geist-mono)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
   		},
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 } satisfies Config;
