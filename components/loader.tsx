@@ -44,7 +44,7 @@ export function Loader() {
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
-              Prathamesh Bhandekar
+              Automating the boring parts
             </motion.p>
 
             <div className="relative h-px w-32 overflow-hidden bg-border">
