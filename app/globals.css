@@ -3,67 +3,67 @@
 @tailwind utilities;
 
 /*
-  Design tokens adapted from the Judgment Labs design language
-  (judgmentlabs.ai): coral primary accent, near-neutral surfaces,
-  Inter type + mono labels. Dark is the active theme (forced in layout).
+  Quiet, editorial design tokens: warm stone neutrals, a single coral
+  accent used sparingly, Geist Sans + Geist Mono. Light and dark are both
+  first-class; the theme follows the OS until the visitor toggles it.
 */
 
 @layer base {
   :root {
-    /* Light (JL light) — inert while `dark` is forced, kept for coherence */
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.5%;
-    --card: 0 0% 98.8%;
-    --card-foreground: 0 0% 3.5%;
+    --background: 60 9% 98%;
+    --foreground: 24 10% 10%;
+    --card: 40 8% 95.5%;
+    --card-foreground: 24 10% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.5%;
-    --primary: 8 97% 60%;
-    --primary-foreground: 12 88% 96.7%;
-    --secondary: 0 0% 95.7%;
-    --secondary-foreground: 0 0% 3.5%;
-    --muted: 0 0% 95.7%;
-    --muted-foreground: 0 0% 44.7%;
-    --accent: 0 0% 95.7%;
-    --accent-foreground: 0 0% 3.5%;
+    --popover-foreground: 24 10% 10%;
+    --primary: 8 90% 57%;
+    --primary-foreground: 12 88% 97%;
+    --secondary: 40 6% 93%;
+    --secondary-foreground: 24 10% 10%;
+    --muted: 40 6% 93%;
+    --muted-foreground: 25 5% 45%;
+    --accent: 40 6% 93%;
+    --accent-foreground: 24 10% 10%;
     --destructive: 357 96% 57.8%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 88.2%;
-    --input: 0 0% 88.2%;
-    --ring: 0 0% 87.5%;
+    --border: 30 6% 88%;
+    --input: 30 6% 88%;
+    --ring: 24 6% 70%;
     --chart-1: 8 97% 60%;
     --chart-2: 42 100% 60%;
     --chart-3: 173 58% 39%;
     --chart-4: 197 37% 24%;
     --chart-5: 27 87% 67%;
-    --radius: 0.375rem;
+    --radius: 0.75rem;
+    --grain-opacity: 0.035;
   }
 
   .dark {
-    /* Dark (JL dark) — active theme */
-    --background: 0 0% 8.6%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 10.6%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 10.6%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 8 93% 60.6%;
-    --primary-foreground: 12 88% 96.7%;
-    --secondary: 0 0% 16.1%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 16.1%;
-    --muted-foreground: 0 0% 62.7%;
-    --accent: 0 0% 16.1%;
-    --accent-foreground: 0 0% 98%;
+    --background: 0 0% 7%;
+    --foreground: 0 0% 94%;
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 94%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 94%;
+    --primary: 8 93% 62%;
+    --primary-foreground: 12 88% 97%;
+    --secondary: 0 0% 14%;
+    --secondary-foreground: 0 0% 94%;
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 58%;
+    --accent: 0 0% 14%;
+    --accent-foreground: 0 0% 94%;
     --destructive: 357 96% 57.8%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 15.3%;
-    --input: 0 0% 13.3%;
-    --ring: 0 0% 22%;
+    --border: 0 0% 16%;
+    --input: 0 0% 16%;
+    --ring: 0 0% 30%;
     --chart-1: 8 93% 60.6%;
     --chart-2: 42 100% 60%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --grain-opacity: 0.05;
   }
 }
 
@@ -71,29 +71,42 @@
   * {
     @apply border-border;
   }
+  html {
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "ss01", "cv11";
+  }
+  ::selection {
+    @apply bg-primary/20 text-foreground;
+  }
+
+  /* Film grain over the whole page, like paper. Pointer-transparent. */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: var(--grain-opacity);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 }
 
-@font-face {
-  font-family: 'Satoshi';
-  src: url('/fonts/Satoshi-Variable.woff2') format('woff2'),
-       url('/fonts/Satoshi-Variable.woff') format('woff'),
-       url('/fonts/Satoshi-Variable.ttf') format('truetype');
-  font-weight: 300 900;
-  font-display: swap;
-  font-style: normal;
-}
+@layer components {
+  /* Inline text link with a dotted underline that firms up on hover. */
+  .link {
+    @apply text-foreground underline decoration-muted-foreground/40 decoration-dotted decoration-[1.5px] underline-offset-[5px] transition-colors hover:decoration-foreground;
+  }
 
-@font-face {
-  font-family: 'Satoshi';
-  src: url('/fonts/Satoshi-VariableItalic.woff2') format('woff2'),
-       url('/fonts/Satoshi-VariableItalic.woff') format('woff'),
-       url('/fonts/Satoshi-VariableItalic.ttf') format('truetype');
-  font-weight: 300 900;
-  font-display: swap;
-  font-style: italic;
+  /* Small uppercase mono label used for section headings and metadata. */
+  .eyebrow {
+    @apply font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground;
+  }
 }
 
 @layer utilities {
