@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { Loader } from "@/components/loader";
 import { themeScript } from "@/lib/theme";
@@ -12,6 +12,14 @@ const geistSans = Geist({
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+// Used sparingly for an italic accent phrase in headlines.
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-serif",
+  weight: "400",
+  style: "italic",
   subsets: ["latin"],
 });
 
@@ -71,7 +79,7 @@ const personJsonLd = {
   "@type": "Person",
   name: "Prathamesh Bhandekar",
   url: SITE_URL,
-  image: `${SITE_URL}/opengraph-image.png`,
+  image: `${SITE_URL}/avatar.jpg`,
   email: `mailto:${site.email}`,
   jobTitle: "AI Engineer",
   description: SHORT_DESCRIPTION,
@@ -124,7 +132,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable}`}
       suppressHydrationWarning
     >
       <head>
