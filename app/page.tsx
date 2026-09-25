@@ -6,6 +6,7 @@ import { BlurFade } from "@/components/magicui/blur-fade"
 import { CopyEmail } from "@/components/copy-email"
 import { SiteFooter } from "@/components/site-footer"
 import { ProjectCard } from "@/components/project-card"
+import { ProjectStickers } from "@/components/project-stickers"
 import { SiteHeader } from "@/components/site-header"
 import { formatDate, getAllPosts } from "@/lib/posts"
 import { getAllProjects } from "@/lib/projects"
@@ -48,7 +49,12 @@ export default function Portfolio() {
   const projects = getAllProjects()
 
   return (
-    <main className="min-h-screen px-6 pt-16 md:pt-24">
+    <main className="relative isolate min-h-screen px-6 pt-16 md:pt-24">
+      {/* Faint dot grid behind the intro, fading out from the top */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[640px] [background-image:radial-gradient(hsl(var(--foreground)/0.13)_1px,transparent_1px)] [background-size:18px_18px] [mask-image:radial-gradient(ellipse_55%_60%_at_50%_25%,black,transparent)]"
+      />
       <div className="mx-auto max-w-[640px]">
         <BlurFade>
           <SiteHeader />
@@ -58,9 +64,11 @@ export default function Portfolio() {
         <BlurFade delay={0.1}>
           <section className="mt-14 space-y-5">
             <h1 className="text-[26px] font-medium leading-[1.3] tracking-[-0.02em] text-balance md:text-[30px]">
-              AI engineer building{" "}
-              <span className="whitespace-nowrap text-muted-foreground">LLM systems</span> that hold
-              up in production.
+              AI engineer building LLM systems that{" "}
+              <span className="whitespace-nowrap font-serif text-[1.2em] font-normal italic leading-none tracking-normal text-muted-foreground">
+                hold up
+              </span>{" "}
+              in production.
             </h1>
             <p className="text-[15px] leading-relaxed text-muted-foreground">
               I design and build LLM systems end to end: agentic workflows, document
@@ -73,16 +81,13 @@ export default function Portfolio() {
               <a href={site.company.url} target="_blank" rel="noopener" className="link">
                 {site.company.name}
               </a>
-              . On the side I build tools like{" "}
-              <Link href="/projects/mindvault" className="link">
-                MindVault
-              </Link>
-              , and I{" "}
+              , and I&apos;m most interested in data systems for agents: retrieval over
+              documents that change, and evaluating agents at scale. On the side I{" "}
               <Link href="/blog" className="link">
                 write
               </Link>{" "}
-              about what I learn. I&apos;m most interested in data systems for agents: retrieval
-              over documents that change, and evaluating agents at scale.
+              about what I learn and build tools like these
+              <ProjectStickers projects={projects} />
             </p>
             <p className="text-[15px] leading-relaxed text-muted-foreground">
               Find me on{" "}
