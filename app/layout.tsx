@@ -21,31 +21,44 @@ const SITE_URL = site.url;
 // Paste only the content="..." token below, then redeploy and click Verify.
 const GOOGLE_SITE_VERIFICATION = "REPLACE_WITH_GOOGLE_SEARCH_CONSOLE_TOKEN";
 
+const DEFAULT_TITLE = "Prathamesh Bhandekar — Founding Engineer, Applied AI";
+const SHORT_DESCRIPTION =
+  "Founding engineer at Stozia building production LLM systems: agentic workflows, document intelligence, retrieval and evaluation.";
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Prathamesh Bhandekar — Full-Stack Engineer & AI Developer",
+    default: DEFAULT_TITLE,
     template: "%s | Prathamesh Bhandekar",
   },
-  description:
-    "Prathamesh Bhandekar is a full-stack engineer and AI developer studying Computer Science at MMIT, Pune. Building AI-powered products — explore the projects and resume.",
+  description: site.description,
+  keywords: [
+    "Prathamesh Bhandekar",
+    "Founding Engineer",
+    "Applied AI engineer",
+    "LLM engineer",
+    "AI agents",
+    "LangGraph",
+    "Document intelligence",
+    "RAG",
+    "LLM evaluation",
+    "Pune",
+  ],
   authors: [{ name: "Prathamesh Bhandekar", url: SITE_URL }],
   creator: "Prathamesh Bhandekar",
   publisher: "Prathamesh Bhandekar",
   openGraph: {
-    title: "Prathamesh Bhandekar — Full-Stack Engineer & AI Developer",
-    description:
-      "Full-stack engineer and AI developer studying Computer Science at MMIT, Pune. Building AI-powered products.",
+    title: DEFAULT_TITLE,
+    description: SHORT_DESCRIPTION,
     url: SITE_URL,
     siteName: "Prathamesh Bhandekar",
     locale: "en_US",
-    type: "website",
+    type: "profile",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Prathamesh Bhandekar — Full-Stack Engineer & AI Developer",
-    description:
-      "Full-stack engineer and AI developer studying Computer Science at MMIT, Pune. Building AI-powered products.",
+    title: DEFAULT_TITLE,
+    description: SHORT_DESCRIPTION,
     creator: "@impra20",
   },
   ...(GOOGLE_SITE_VERIFICATION.startsWith("REPLACE")
@@ -59,25 +72,56 @@ const personJsonLd = {
   name: "Prathamesh Bhandekar",
   url: SITE_URL,
   image: `${SITE_URL}/opengraph-image.png`,
-  jobTitle: "Full-Stack Engineer",
-  description:
-    "Full-stack engineer and AI developer studying Computer Science at MMIT, Pune. Building AI-powered products.",
-  alumniOf: {
-    "@type": "CollegeOrUniversity",
-    name: "Marathwada Mitra Mandal's Institute of Technology (MMIT), Pune",
+  email: `mailto:${site.email}`,
+  jobTitle: "Founding Engineer",
+  description: SHORT_DESCRIPTION,
+  worksFor: {
+    "@type": "Organization",
+    name: site.company.name,
+    url: site.company.url,
+  },
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Pune",
+    addressRegion: "Maharashtra",
+    addressCountry: "IN",
+  },
+  alumniOf: [
+    {
+      "@type": "CollegeOrUniversity",
+      name: "Savitribai Phule Pune University",
+    },
+    {
+      "@type": "CollegeOrUniversity",
+      name: "Marathwada Mitra Mandal's Institute of Technology (MMIT), Pune",
+    },
+  ],
+  hasCredential: {
+    "@type": "EducationalOccupationalCredential",
+    credentialCategory: "degree",
+    name: "Bachelor of Engineering (Computer Engineering)",
+    recognizedBy: {
+      "@type": "CollegeOrUniversity",
+      name: "Savitribai Phule Pune University",
+    },
   },
   knowsAbout: [
-    "Full-Stack Development",
-    "Artificial Intelligence",
-    "Machine Learning",
-    "Web Development",
-    "React",
+    "Large language models",
+    "AI agents",
+    "LangGraph",
+    "Document intelligence",
+    "Information retrieval",
+    "Retrieval-augmented generation",
+    "LLM evaluation",
+    "FastAPI",
     "Next.js",
+    "TypeScript",
+    "Python",
   ],
   sameAs: [
-    "https://github.com/bprathamesh20",
-    "https://www.linkedin.com/in/prathamesh-bhandekar/",
-    "https://x.com/impra20",
+    site.socials.github,
+    site.socials.linkedin,
+    site.socials.x,
   ],
 };
 

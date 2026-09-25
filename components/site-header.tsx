@@ -50,7 +50,12 @@ export function SiteHeader() {
           <ThemeToggle />
         </nav>
       </div>
-      <p className="text-[15px] text-muted-foreground">{site.role}</p>
+      <p className="text-[15px] text-muted-foreground">
+        {site.title} at{" "}
+        <a href={site.company.url} target="_blank" rel="noopener" className="link text-muted-foreground hover:text-foreground">
+          {site.company.name}
+        </a>
+      </p>
       <p className="mt-3 font-mono text-[11px] text-muted-foreground">
         {site.location} · <LocalTime />
       </p>

@@ -1,7 +1,11 @@
 export const site = {
   url: "https://www.bprathamesh.com",
   name: "Prathamesh Bhandekar",
-  role: "Full-stack engineer · AI agents",
+  title: "Founding Engineer",
+  company: { name: "Stozia", url: "https://www.stozia.com" },
+  tagline: "Founding engineer building production LLM systems",
+  description:
+    "Prathamesh Bhandekar is a founding engineer at Stozia in Pune, building production LLM systems: agentic workflows, multimodal document intelligence, retrieval and model evaluation.",
   location: "Pune, IN",
   timeZone: "Asia/Kolkata",
   email: "bprathamesh2003@gmail.com",
