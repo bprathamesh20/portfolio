@@ -1,0 +1,49 @@
+---
+title: "MindVault"
+tag: "AI knowledge base"
+summary: "A private, AI-organized second brain. Save anything in two seconds, find it again by meaning."
+description: "MindVault is a private, AI-organized knowledge base built with Next.js, Convex and Expo. It captures articles, X posts, reels and notes, then auto-tags, summarizes and indexes them for hybrid semantic search."
+year: "2026"
+role: "Solo · design & engineering"
+image: "/projects/mindvault.jpg"
+imageAlt: "MindVault web app showing a masonry grid of saved articles, X posts, reels, PDFs and product cards"
+source:
+  - label: "Source on GitHub"
+    url: "https://github.com/bprathamesh20/mindvault"
+stack: ["Next.js", "TypeScript", "Convex", "Expo", "React Native", "Tailwind CSS", "OpenRouter", "Vector search", "Chrome extension"]
+order: 1
+---
+
+## Overview
+
+MindVault is a private, AI-organized knowledge base for everything I want to remember: articles, X posts, Instagram reels, product pages, images, PDFs and quick notes. The promise is simple: **capture in under two seconds, find it again in under two seconds**, and never file anything into folders.
+
+It runs as a web app, an Android app with share-sheet capture, and a Chrome extension. All three share one reactive backend.
+
+## The problem
+
+Saving things is easy. Finding them again is not. Bookmarks rot in browser folders, screenshots disappear into the camera roll, and every platform's "save for later" keeps things in its own silo. I wanted one calm place where capture works instantly from anywhere, and an AI pipeline does the organizing for me.
+
+## How it works
+
+1. **Capture from anywhere.** The Chrome extension (a toolbar click or <kbd>⌘</kbd><kbd>⇧</kbd><kbd>S</kbd>), the web app, the Android share sheet, or any HTTP client can post to a capture endpoint. The item is saved as `pending` and a placeholder card appears right away.
+2. **Extract.** A durable background job picks the right extractor for the source. X posts go through the fxtwitter API, Instagram through og-tags, and articles through Mozilla Readability, falling back to `r.jina.ai` for JavaScript-heavy pages. Thumbnails go to Convex file storage.
+3. **Enrich.** A second job asks an LLM for a two-sentence summary and 2–5 tags, steered by the tags I already use, then computes a 1536-dimension embedding.
+4. **Update live.** Every client subscribes to reactive queries. As soon as enrichment finishes, the placeholder turns into a rich card on every device, with no refresh.
+
+![MindVault architecture: capture from the Chrome extension, web app, Android share sheet or any HTTP client flows into a Convex pipeline that extracts, enriches and embeds each item, then updates the masonry grid, hybrid search and reader on every device](/projects/mindvault-architecture.svg)
+
+## Search that understands meaning
+
+Search runs full-text and vector search in parallel, then merges the two result lists with **reciprocal rank fusion**. Vector hits must clear a relative score floor, so weak semantic matches don't bury exact keyword hits.
+
+**Ask** is built on the same retrieval. It pulls the best-matching items from the vault and answers questions about them, citing the cards it used as sources.
+
+![MindVault in light mode: a masonry grid of saved cards with type badges for articles, posts, reels, PDFs and products](/projects/mindvault-light.jpg)
+
+## Engineering decisions
+
+- **Convex is the whole backend.** One service provides the database, reactive queries, a durable scheduler, file storage, and full-text and vector search. The web and mobile apps use the same functions.
+- **Failure is a designed state.** Extraction retries with backoff three times, then shows a graceful "couldn't save" card instead of a broken one. A cron job re-queues anything stuck in `pending`.
+- **One AI key.** OpenRouter serves both the chat and embedding models, so I can swap models with an environment variable.
+- **Single-user on purpose.** One passphrase through Convex Auth: no accounts, no sharing, no sign-up flow to maintain.

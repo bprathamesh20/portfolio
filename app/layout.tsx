@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import { Inter, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Loader } from "@/components/loader";
+import { themeScript } from "@/lib/theme";
+import { site } from "@/lib/site";
 
-const inter = Inter({
-  variable: "--font-inter",
+const geistSans = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
@@ -13,37 +15,50 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const SITE_URL = "https://www.bprathamesh.com";
+const SITE_URL = site.url;
 
 // Google Search Console → Settings → Ownership verification → "HTML tag".
 // Paste only the content="..." token below, then redeploy and click Verify.
 const GOOGLE_SITE_VERIFICATION = "REPLACE_WITH_GOOGLE_SEARCH_CONSOLE_TOKEN";
 
+const DEFAULT_TITLE = "Prathamesh Bhandekar — AI Engineer";
+const SHORT_DESCRIPTION =
+  "AI engineer building production LLM systems: agentic workflows, document intelligence, retrieval and evaluation.";
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Prathamesh Bhandekar — Full-Stack Engineer & AI Developer",
-  description:
-    "Prathamesh Bhandekar is a full-stack engineer and AI developer studying Computer Science at MMIT, Pune. Building AI-powered products — explore the projects and resume.",
-  alternates: {
-    canonical: "/",
+  title: {
+    default: DEFAULT_TITLE,
+    template: "%s | Prathamesh Bhandekar",
   },
+  description: site.description,
+  keywords: [
+    "Prathamesh Bhandekar",
+    "AI engineer",
+    "Applied AI engineer",
+    "LLM engineer",
+    "AI agents",
+    "LangGraph",
+    "Document intelligence",
+    "RAG",
+    "LLM evaluation",
+    "Pune",
+  ],
   authors: [{ name: "Prathamesh Bhandekar", url: SITE_URL }],
   creator: "Prathamesh Bhandekar",
   publisher: "Prathamesh Bhandekar",
   openGraph: {
-    title: "Prathamesh Bhandekar — Full-Stack Engineer & AI Developer",
-    description:
-      "Full-stack engineer and AI developer studying Computer Science at MMIT, Pune. Building AI-powered products.",
+    title: DEFAULT_TITLE,
+    description: SHORT_DESCRIPTION,
     url: SITE_URL,
     siteName: "Prathamesh Bhandekar",
     locale: "en_US",
-    type: "website",
+    type: "profile",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Prathamesh Bhandekar — Full-Stack Engineer & AI Developer",
-    description:
-      "Full-stack engineer and AI developer studying Computer Science at MMIT, Pune. Building AI-powered products.",
+    title: DEFAULT_TITLE,
+    description: SHORT_DESCRIPTION,
     creator: "@impra20",
   },
   ...(GOOGLE_SITE_VERIFICATION.startsWith("REPLACE")
@@ -57,25 +72,47 @@ const personJsonLd = {
   name: "Prathamesh Bhandekar",
   url: SITE_URL,
   image: `${SITE_URL}/opengraph-image.png`,
-  jobTitle: "Full-Stack Engineer",
-  description:
-    "Full-stack engineer and AI developer studying Computer Science at MMIT, Pune. Building AI-powered products.",
-  alumniOf: {
-    "@type": "CollegeOrUniversity",
-    name: "Marathwada Mitra Mandal's Institute of Technology (MMIT), Pune",
+  email: `mailto:${site.email}`,
+  jobTitle: "AI Engineer",
+  description: SHORT_DESCRIPTION,
+  worksFor: {
+    "@type": "Organization",
+    name: site.company.name,
+    url: site.company.url,
   },
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Pune",
+    addressRegion: "Maharashtra",
+    addressCountry: "IN",
+  },
+  alumniOf: [
+    {
+      "@type": "CollegeOrUniversity",
+      name: "Savitribai Phule Pune University",
+    },
+    {
+      "@type": "CollegeOrUniversity",
+      name: "Marathwada Mitra Mandal's Institute of Technology (MMIT), Pune",
+    },
+  ],
   knowsAbout: [
-    "Full-Stack Development",
-    "Artificial Intelligence",
-    "Machine Learning",
-    "Web Development",
-    "React",
+    "Large language models",
+    "AI agents",
+    "LangGraph",
+    "Document intelligence",
+    "Information retrieval",
+    "Retrieval-augmented generation",
+    "LLM evaluation",
+    "FastAPI",
     "Next.js",
+    "TypeScript",
+    "Python",
   ],
   sameAs: [
-    "https://github.com/bprathamesh20",
-    "https://www.linkedin.com/in/prathamesh-bhandekar/",
-    "https://x.com/impra20",
+    site.socials.github,
+    site.socials.linkedin,
+    site.socials.x,
   ],
 };
 
@@ -85,7 +122,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`dark ${inter.variable} ${geistMono.variable}`}>
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable}`}
+      suppressHydrationWarning
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="font-sans antialiased bg-background text-foreground">
         <script
           type="application/ld+json"

@@ -1,0 +1,63 @@
+---
+title: "Cafi AI"
+tag: "AI interview agent"
+summary: "A real-time voice agent that runs technical interviews. Final-year project, graded Outstanding."
+description: "Cafi AI is a real-time voice interview agent built with LiveKit, GPT-4o and Deepgram, with in-browser code execution and LLM-generated assessments. A final-year project graded Outstanding, plus a technical retrospective on preserving answer identity in LLM-based assessment."
+year: "2024–25"
+role: "Backend, voice agent & evaluation · team of 4"
+image: "/projects/cafi-ai.png"
+imageAlt: "Cafi AI landing page: Save time, hire smarter with Cafi AI"
+live: "https://cafi-landing-page.vercel.app/"
+source:
+  - label: "Web app"
+    url: "https://github.com/bprathamesh20/cafi-ai-istd"
+  - label: "Voice agent"
+    url: "https://github.com/bprathamesh20/cafi-backend-istd"
+stack: ["LiveKit Agents", "Python", "GPT-4o", "Deepgram", "Gemini", "Next.js", "TypeScript", "MongoDB", "Vercel AI SDK", "Zod"]
+order: 2
+---
+
+## Overview
+
+Cafi AI (formally, *Adaptive Conversation Agent for Technical Interview and Real-Time Code Evaluation*) is a voice agent that runs structured technical interviews. A recruiter builds a question set and sends a candidate an interview link. Cafi's AI interviewer, **Lexi**, then holds a real-time spoken conversation, stores each answer, and the stored answers are later assessed by a language model.
+
+It was my four-person final-year project at MMIT, supervised by Dr. Pramod Dhamdhere, and it was graded **Outstanding**. My main responsibilities were the Python backend, the voice-agent pipeline and the automated evaluation engine. I also worked on the Next.js interface for configuring interviews and reviewing candidates.
+
+## The problem
+
+First-round screening interviews are repetitive: the same questions, asked the same way, many times a week. They take hours of interviewers' time and are hard to keep consistent from one candidate to the next. Cafi automates that first round while keeping it a spoken conversation, not a form.
+
+## How it works
+
+1. **Build a question set.** Recruiters create question sets and interviews from a Next.js dashboard backed by MongoDB.
+2. **Join the room.** The candidate opens their link and joins a LiveKit room. The server issues a connection token, and the participant's identity carries both the user ID and the interview ID.
+3. **Talk to Lexi.** A Python worker on LiveKit Agents runs the voice pipeline. Silero VAD detects turns, Deepgram transcribes speech, GPT-4o drives the conversation, and Deepgram Aura speaks the replies.
+4. **Use tools instead of memory.** The agent calls a tool to fetch the interview's question set from MongoDB, asks the questions strictly in order, and calls a second tool to save each question-and-answer pair as soon as it's given.
+5. **Assess.** A structured-output request to Gemini, through the Vercel AI SDK with a Zod schema, returns a score and feedback for every stored answer plus an overall breakdown.
+
+For coding questions, candidates write and run code in an in-browser editor (Monaco) through the Piston execution API. Code runs, but it isn't graded against test suites, and the assessment doesn't read the execution results.
+
+## Engineering decisions
+
+- **A strict, scripted interviewer.** The system prompt pins Lexi to the question list: no follow-ups, no small talk, and a fixed redirect if the candidate drifts off-topic. For a hiring tool, being consistent across candidates matters more than personality.
+- **Save as you go.** Answers are written to the database one at a time as the interview happens, not in one batch at the end. Each saved answer is tied to a specific interview through its interview ID.
+- **Interview context comes from the database.** Question sets are fetched by reference instead of being hard-coded, so each interview can have its own questions and answer history. The cost is that every service has to agree on how IDs are represented.
+
+## Retrospective: keeping scores attached to the right answers
+
+In September 2026 I wrote a single-author technical report on one narrow question: *when the model returns assessments, does each score stay attached to the answer it was about?* This is later analysis, separate from the graded 2025 project.
+
+The original evaluator matched assessments to stored answers using the question text the model echoed back. If the model reworded a question, the score for that question fell back to a default zero. If two questions had the same text, one assessment overwrote the other.
+
+The retrospective fix keeps the database's **stable answer ID** through the round trip. Before anything is saved, it checks that every expected ID comes back exactly once. Unknown, duplicate or missing IDs fail the request with an explicit error instead of producing a made-up score.
+
+In controlled experiments on 20 synthetic records:
+
+- **Rewording:** the original join lost all 20 scores; the revised join kept all 20.
+- **Repeated questions:** the revised join kept distinct scores for questions with identical text.
+- **Bad IDs:** it rejected duplicate, missing and unknown identifiers.
+- **Negative control:** a batch with all 20 scores deliberately assigned to the wrong answers still passed validation. Structural checks prove that scores are *attached* correctly, not that the grading is *right*.
+
+In archived runs against a live model, neither version had association failures (200 of 200 scores kept in both). So the evidence shows better handling of specific failure cases, not a measured production failure rate or better grading.
+
+The lesson I took from it: **the link between generated data and its source record needs its own contract.** A schema-valid response can still be joined to the wrong row.

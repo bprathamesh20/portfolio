@@ -1,0 +1,40 @@
+---
+title: "GenNotes"
+tag: "AI notes agent"
+summary: "A research agent that turns a syllabus into illustrated, sourced study notes."
+description: "GenNotes is an AI research agent built with Agno, Gemini and FastAPI. It turns syllabus topics or exam questions into structured study notes with diagrams and sources, researched live from the web."
+year: "2025"
+role: "Full-stack & AI engineering"
+image: "/projects/gennotes.png"
+imageAlt: "GenNotes generating study notes on the Krebs cycle, with the sources it used on the left and a formatted notes preview on the right"
+live: "https://gennotes-frontend.vercel.app/"
+source:
+  - label: "Frontend"
+    url: "https://github.com/bprathamesh20/gennotes-frontend"
+  - label: "Agent"
+    url: "https://github.com/bprathamesh20/gennotes-agent"
+stack: ["Python", "Agno", "Gemini 2.5 Pro", "FastAPI", "Crawl4AI", "Next.js", "TypeScript"]
+order: 3
+---
+
+## Overview
+
+GenNotes turns a syllabus or a list of exam questions into complete study notes. Paste in your topics, and an agent researches each one on the web, reads the best sources, and finds relevant diagrams. You get back a clean, formatted page of notes that you can download as a PDF.
+
+## The problem
+
+Studying from a syllabus means hunting across a dozen tabs for every topic, then rewriting it all into something readable. General-purpose chatbots answer from memory, skip diagrams, and don't show where anything came from.
+
+## How it works
+
+1. **Plan.** The agent, built with Agno on Gemini 2.5 Pro, first plans which tools to call for each topic.
+2. **Research.** It searches the web with DuckDuckGo, favouring trusted references for computer science topics, and uses Crawl4AI to read full pages when a search snippet isn't enough.
+3. **Find visuals.** A custom Google Image Search tool pulls two or three relevant diagrams for each topic.
+4. **Write.** It combines everything into structured notes: key concepts, a detailed explanation, examples, links to related topics, a summary and practice questions. The sources it used are listed alongside.
+5. **Export.** The Next.js frontend shows the notes in a preview pane and exports them to PDF.
+
+## Engineering decisions
+
+- **An agent with tools, not one big prompt.** Basing every topic on live search and full-page reads keeps the notes accurate and current, and shows where each fact came from.
+- **HTML as the output format.** Having the model write styled HTML means diagrams, headings and lists render exactly as intended and export cleanly to PDF.
+- **A thin API.** The agent sits behind a single FastAPI `/generate` endpoint, which keeps the frontend simple.
