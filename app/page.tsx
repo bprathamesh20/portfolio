@@ -43,20 +43,6 @@ const focus = [
   },
 ]
 
-const stozia = {
-  stats: [
-    { value: "100M+", label: "LLM tokens processed" },
-    { value: "900+", label: "supplier quotes structured" },
-    { value: "50", label: "users at 7 manufacturers" },
-  ],
-  points: [
-    "Own the LLM pipeline layer: LangGraph multi-agent workflows for document interpretation, supplier discovery, cost modelling, quote comparison and negotiation planning.",
-    "Built multimodal document-intelligence pipelines that turned about 900 supplier quotes into structured commercial and engineering data across 225+ procurement cases.",
-    "Built an evaluation harness on held-out documents labelled by procurement experts to compare 18 models on field-level accuracy, latency and cost. Its results supported moving to a cheaper model with prompt caching: 37% modelled cost avoidance against uncached list pricing, with no accuracy loss on the labelled set.",
-    "Added per-agent observability for cost, latency, failures and tokens, and ship the FastAPI, MySQL, Celery and Redis services to Azure Container Apps through GitHub Actions.",
-  ],
-}
-
 export default function Portfolio() {
   const posts = getAllPosts().slice(0, 5)
   const projects = getAllProjects()
@@ -72,22 +58,22 @@ export default function Portfolio() {
         <BlurFade delay={0.1}>
           <section className="mt-14 space-y-5">
             <h1 className="text-[26px] font-medium leading-[1.3] tracking-[-0.02em] text-balance md:text-[30px]">
-              Founding engineer building{" "}
+              AI engineer building{" "}
               <span className="whitespace-nowrap text-muted-foreground">LLM systems</span> that hold
               up in production.
             </h1>
             <p className="text-[15px] leading-relaxed text-muted-foreground">
-              At{" "}
-              <a href={site.company.url} target="_blank" rel="noopener" className="link">
-                Stozia
-              </a>
-              , an AI sourcing platform for manufacturers, I own the LLM pipeline layer:
-              agents that read supplier documents, extract structured data, and draft
-              negotiation and approval recommendations. I care about the parts that decide
-              whether AI works in production: evaluation, cost, latency and observability.
+              I design and build LLM systems end to end: agentic workflows, document
+              intelligence, retrieval, and the evaluation that shows whether any of it
+              works. I care about what decides success in production: cost, latency,
+              observability and knowing when an answer is wrong.
             </p>
             <p className="text-[15px] leading-relaxed text-muted-foreground">
-              Outside work I build tools like{" "}
+              I currently work at{" "}
+              <a href={site.company.url} target="_blank" rel="noopener" className="link">
+                {site.company.name}
+              </a>
+              . On the side I build tools like{" "}
               <Link href="/projects/mindvault" className="link">
                 MindVault
               </Link>
@@ -136,67 +122,20 @@ export default function Portfolio() {
         </BlurFade>
 
         <Section title="Experience">
-          <ol className="space-y-12">
-            <li>
-              <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-                <h3 className="text-[15px] font-medium">
-                  Founding Engineer ·{" "}
-                  <a href={site.company.url} target="_blank" rel="noopener" className="link">
-                    Stozia
-                  </a>
-                </h3>
-                <span className="font-mono text-[11px] tabular-nums text-muted-foreground">
-                  Jun 2025 — Present
-                </span>
-              </div>
-              <p className="mt-1 text-[14px] text-muted-foreground">
-                AI-agentic sourcing platform for manufacturing procurement · founding team of fewer than ten
-              </p>
-
-              <dl className="mt-5 grid grid-cols-3 divide-x divide-dashed divide-border rounded-xl bg-card ring-1 ring-inset ring-border">
-                {stozia.stats.map((stat) => (
-                  <div key={stat.label} className="px-3 py-3.5 sm:px-4">
-                    <dt className="sr-only">{stat.label}</dt>
-                    <dd className="text-[20px] font-medium tracking-[-0.02em] tabular-nums">
-                      {stat.value}
-                    </dd>
-                    <dd className="mt-0.5 text-[12px] leading-snug text-muted-foreground">
-                      {stat.label}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-
-              <ul className="mt-5 space-y-2.5">
-                {stozia.points.map((point) => (
-                  <li
-                    key={point}
-                    className="relative pl-4 text-[14px] leading-relaxed text-muted-foreground before:absolute before:left-0 before:top-[0.7em] before:h-1 before:w-1 before:rounded-full before:bg-border"
-                  >
-                    {point}
-                  </li>
-                ))}
-              </ul>
-            </li>
-
-            <li>
-              <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-                <h3 className="text-[15px] font-medium">
-                  B.E. Computer Engineering · Savitribai Phule Pune University
-                </h3>
-                <span className="font-mono text-[11px] tabular-nums text-muted-foreground">
-                  2021 — 2025
-                </span>
-              </div>
-              <p className="mt-1 text-[14px] leading-relaxed text-muted-foreground">
-                MMIT, Pune · CGPA 8.52/10, First Class with Distinction. My final-year project,{" "}
-                <Link href="/projects/cafi-ai" className="link">
-                  Cafi AI
-                </Link>
-                , was graded Outstanding.
-              </p>
-            </li>
-          </ol>
+          <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+            <h3 className="text-[15px] font-medium">
+              Founding Engineer ·{" "}
+              <a href={site.company.url} target="_blank" rel="noopener" className="link">
+                {site.company.name}
+              </a>
+            </h3>
+            <span className="font-mono text-[11px] tabular-nums text-muted-foreground">
+              Jun 2025 — Present
+            </span>
+          </div>
+          <p className="mt-1 text-[14px] text-muted-foreground">
+            AI-agentic sourcing platform for manufacturing procurement
+          </p>
         </Section>
       </div>
 

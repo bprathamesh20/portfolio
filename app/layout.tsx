@@ -21,9 +21,9 @@ const SITE_URL = site.url;
 // Paste only the content="..." token below, then redeploy and click Verify.
 const GOOGLE_SITE_VERIFICATION = "REPLACE_WITH_GOOGLE_SEARCH_CONSOLE_TOKEN";
 
-const DEFAULT_TITLE = "Prathamesh Bhandekar — Founding Engineer, Applied AI";
+const DEFAULT_TITLE = "Prathamesh Bhandekar — AI Engineer";
 const SHORT_DESCRIPTION =
-  "Founding engineer at Stozia building production LLM systems: agentic workflows, document intelligence, retrieval and evaluation.";
+  "AI engineer building production LLM systems: agentic workflows, document intelligence, retrieval and evaluation.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   description: site.description,
   keywords: [
     "Prathamesh Bhandekar",
-    "Founding Engineer",
+    "AI engineer",
     "Applied AI engineer",
     "LLM engineer",
     "AI agents",
@@ -73,7 +73,7 @@ const personJsonLd = {
   url: SITE_URL,
   image: `${SITE_URL}/opengraph-image.png`,
   email: `mailto:${site.email}`,
-  jobTitle: "Founding Engineer",
+  jobTitle: "AI Engineer",
   description: SHORT_DESCRIPTION,
   worksFor: {
     "@type": "Organization",
@@ -96,15 +96,6 @@ const personJsonLd = {
       name: "Marathwada Mitra Mandal's Institute of Technology (MMIT), Pune",
     },
   ],
-  hasCredential: {
-    "@type": "EducationalOccupationalCredential",
-    credentialCategory: "degree",
-    name: "Bachelor of Engineering (Computer Engineering)",
-    recognizedBy: {
-      "@type": "CollegeOrUniversity",
-      name: "Savitribai Phule Pune University",
-    },
-  },
   knowsAbout: [
     "Large language models",
     "AI agents",
