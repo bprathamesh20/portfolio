@@ -1,0 +1,34 @@
+---
+title: "Medipal"
+tag: "COMSYS hackathon runner-up"
+summary: "Upload a lab report and get a plain-language reading of it, powered by a fine-tuned model."
+description: "Medipal is a medical report analyser and COMSYS hackathon runner-up. It parses PDF lab reports and explains possible findings in plain language using a GPT-3.5 model fine-tuned on the MedMCQA dataset."
+year: "2024"
+role: "Hackathon team project"
+image: "/projects/medipal.png"
+imageAlt: "Medipal chat interface explaining a patient's uploaded medical report"
+live: "https://medipal-ai-frontend.vercel.app/"
+source:
+  - label: "Frontend"
+    url: "https://github.com/bprathamesh20/medipal-ai-frontend"
+  - label: "Backend"
+    url: "https://github.com/bprathamesh20/backend-medical-bot"
+stack: ["React", "Vite", "Node.js", "Express", "OpenAI fine-tuning", "Clerk"]
+order: 4
+---
+
+## Overview
+
+Medipal is a medical report analyser our team built at the COMSYS hackathon, where it placed **runner-up**. You upload a PDF lab report, and Medipal reads it, explains possible findings and their likely causes in plain language, and lets you ask follow-up questions in a chat.
+
+## How it works
+
+1. **Upload.** A React (Vite) frontend with Clerk for authentication accepts the PDF report.
+2. **Parse.** An Express backend extracts the report text with `pdf-parse`.
+3. **Analyse.** The text goes to a GPT-3.5 model fine-tuned on the MedMCQA medical question dataset. It is prompted to answer in a fixed format: possible indications, likely causes, and a recommendation to seek further examination.
+4. **Ask follow-ups.** The chat keeps the report as context for follow-up questions. History stays in the browser's local storage.
+
+## Engineering decisions
+
+- **Fine-tuned, not just prompted.** Training on MedMCQA gives the model medical vocabulary and a consistent, clinical tone.
+- **A fixed response shape as a guardrail.** Every analysis ends by recommending further examination. It's a small constraint, but it matters for anything health-related.

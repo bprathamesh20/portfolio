@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Loader } from "@/components/loader";
 import { themeScript } from "@/lib/theme";
+import { site } from "@/lib/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,7 +15,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const SITE_URL = "https://www.bprathamesh.com";
+const SITE_URL = site.url;
 
 // Google Search Console → Settings → Ownership verification → "HTML tag".
 // Paste only the content="..." token below, then redeploy and click Verify.
@@ -22,12 +23,12 @@ const GOOGLE_SITE_VERIFICATION = "REPLACE_WITH_GOOGLE_SEARCH_CONSOLE_TOKEN";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Prathamesh Bhandekar — Full-Stack Engineer & AI Developer",
+  title: {
+    default: "Prathamesh Bhandekar — Full-Stack Engineer & AI Developer",
+    template: "%s | Prathamesh Bhandekar",
+  },
   description:
     "Prathamesh Bhandekar is a full-stack engineer and AI developer studying Computer Science at MMIT, Pune. Building AI-powered products — explore the projects and resume.",
-  alternates: {
-    canonical: "/",
-  },
   authors: [{ name: "Prathamesh Bhandekar", url: SITE_URL }],
   creator: "Prathamesh Bhandekar",
   publisher: "Prathamesh Bhandekar",

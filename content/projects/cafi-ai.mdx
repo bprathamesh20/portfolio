@@ -1,0 +1,44 @@
+---
+title: "Cafi AI"
+tag: "AI interview agent"
+summary: "A real-time voice agent that runs structured interviews on its own, then scores every answer."
+description: "Cafi AI is a real-time voice interview agent built with LiveKit, GPT-4o and Deepgram. It runs structured screening interviews, saves every answer as it's given, and generates a scored evaluation with Gemini."
+year: "2024–25"
+role: "Full-stack & AI engineering"
+image: "/projects/cafi-ai.png"
+imageAlt: "Cafi AI landing page: Save time, hire smarter with Cafi AI"
+live: "https://cafi-landing-page.vercel.app/"
+source:
+  - label: "Web app"
+    url: "https://github.com/bprathamesh20/cafi-ai-istd"
+  - label: "Voice agent"
+    url: "https://github.com/bprathamesh20/cafi-backend-istd"
+stack: ["LiveKit Agents", "Python", "GPT-4o", "Deepgram", "Gemini", "Next.js", "TypeScript", "MongoDB", "Vercel AI SDK"]
+order: 2
+---
+
+## Overview
+
+Cafi AI is a voice agent that runs structured interviews on its own. A recruiter builds a question set and sends a candidate an interview link. Cafi's AI interviewer, **Lexi**, then holds a real-time spoken conversation, records each answer, and produces a scored evaluation when the interview ends.
+
+## The problem
+
+First-round screening interviews are repetitive: the same questions, asked the same way, many times a week. They take hours of interviewers' time and are hard to keep consistent from one candidate to the next. Cafi automates that first round while keeping it a spoken conversation, not a form.
+
+## How it works
+
+1. **Build a question set.** Recruiters create question sets and schedule interviews from a Next.js dashboard backed by MongoDB.
+2. **Join the room.** The candidate opens their link and joins a LiveKit room. The server issues a connection token, and the participant's identity carries both the user ID and the interview ID.
+3. **Talk to Lexi.** A Python worker on LiveKit Agents runs the voice pipeline. Silero VAD detects turns, Deepgram transcribes speech, GPT-4o drives the conversation, and Deepgram Aura speaks the replies.
+4. **Use tools instead of memory.** The agent calls a tool to fetch the interview's questions from MongoDB, asks them strictly in order, and calls a second tool to save each question-and-answer pair as soon as the candidate answers.
+5. **Evaluate.** After the call, a structured-output request to Gemini scores every answer from 1 to 100, with feedback and an overall breakdown.
+
+## Coding rounds
+
+For technical roles, the session includes an in-browser code editor (Monaco). Candidates' code runs through the Piston execution API, so a coding question fits into the same interview.
+
+## Engineering decisions
+
+- **A strict, scripted interviewer.** The system prompt pins Lexi to the question list: no follow-ups, no small talk, and a fixed redirect if the candidate drifts off-topic. For a hiring tool, being consistent across candidates matters more than personality.
+- **Save after every answer.** Saving through function calls as the interview goes, not at the end, means a dropped connection never loses a candidate's answers.
+- **Validated evaluations.** The evaluation schema is enforced with Zod, and every score is matched back to its answer by ID. The report can't include an answer the candidate never gave, or leave one out.

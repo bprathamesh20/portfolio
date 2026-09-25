@@ -3,9 +3,11 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { ArrowLeft } from "lucide-react"
 import { MDXRemote } from "next-mdx-remote/rsc"
+import { JsonLd } from "@/components/json-ld"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { getAllPosts, getPostBySlug, formatDate } from "@/lib/posts"
+import { site } from "@/lib/site"
 
 export function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }))
@@ -20,9 +22,29 @@ export async function generateMetadata({
   const post = getPostBySlug(slug)
   if (!post) return {}
 
+  const url = `/blog/${slug}`
   return {
-    title: `${post.meta.title} | Prathamesh Bhandekar`,
+    title: post.meta.title,
     description: post.meta.summary,
+    keywords: post.meta.tags,
+    alternates: { canonical: url },
+    openGraph: {
+      type: "article",
+      url,
+      title: post.meta.title,
+      description: post.meta.summary,
+      siteName: site.name,
+      publishedTime: post.meta.date,
+      authors: [site.name],
+      tags: post.meta.tags,
+      images: ["/opengraph-image.png"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.meta.title,
+      description: post.meta.summary,
+      creator: "@impra20",
+    },
   }
 }
 
@@ -37,6 +59,18 @@ export default async function PostPage({
 
   return (
     <main className="min-h-screen px-6 pt-16 md:pt-24">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          headline: post.meta.title,
+          description: post.meta.summary,
+          datePublished: post.meta.date,
+          url: `${site.url}/blog/${slug}`,
+          keywords: post.meta.tags.join(", "),
+          author: { "@type": "Person", name: site.name, url: site.url },
+        }}
+      />
       <div className="mx-auto max-w-[640px]">
         <SiteHeader />
 

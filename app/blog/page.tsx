@@ -5,9 +5,20 @@ import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { getAllPosts, formatDate } from "@/lib/posts"
 
+const description = "Notes on engineering, AI, and side projects by Prathamesh Bhandekar."
+
 export const metadata: Metadata = {
-  title: "Blog | Prathamesh Bhandekar",
-  description: "Notes on engineering, AI, and side projects by Prathamesh Bhandekar.",
+  title: "Blog",
+  description,
+  alternates: { canonical: "/blog" },
+  openGraph: {
+    type: "website",
+    url: "/blog",
+    title: "Blog | Prathamesh Bhandekar",
+    description,
+    siteName: "Prathamesh Bhandekar",
+    images: ["/opengraph-image.png"],
+  },
 }
 
 export default function BlogIndex() {

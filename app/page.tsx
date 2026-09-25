@@ -1,13 +1,20 @@
-import Image from "next/image"
 import Link from "next/link"
+import type { Metadata } from "next"
 import { Activity, ArrowUpRight, Bot, FileSearch, PanelsTopLeft } from "lucide-react"
 import type React from "react"
 import { BlurFade } from "@/components/magicui/blur-fade"
 import { CopyEmail } from "@/components/copy-email"
 import { SiteFooter } from "@/components/site-footer"
+import { ProjectCard } from "@/components/project-card"
 import { SiteHeader } from "@/components/site-header"
 import { formatDate, getAllPosts } from "@/lib/posts"
-import { projects, site, type Project } from "@/lib/site"
+import { getAllProjects } from "@/lib/projects"
+import { site } from "@/lib/site"
+
+// Canonical lives here rather than in the root layout, where every page would inherit "/".
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+}
 
 const focus = [
   {
@@ -38,6 +45,7 @@ const focus = [
 
 export default function Portfolio() {
   const posts = getAllPosts().slice(0, 5)
+  const projects = getAllProjects()
 
   return (
     <main className="min-h-screen px-6 pt-16 md:pt-24">
@@ -105,19 +113,17 @@ export default function Portfolio() {
       <section id="work" className="mx-auto mt-24 max-w-[960px]">
         <div className="mx-auto mb-6 flex max-w-[640px] items-baseline justify-between md:max-w-none">
           <h2 className="eyebrow">Selected work</h2>
-          <span className="font-mono text-[11px] text-muted-foreground">
-            {String(projects.length).padStart(2, "0")} projects
-          </span>
+          <Link
+            href="/projects"
+            className="font-mono text-[11px] text-muted-foreground transition-colors hover:text-foreground"
+          >
+            All projects →
+          </Link>
         </div>
         <div className="mx-auto grid max-w-[640px] grid-cols-1 gap-4 md:max-w-none md:grid-cols-2">
           {projects.map((project, i) => (
-            <BlurFade
-              key={project.title}
-              delay={0.05 * i}
-              inView
-              className={i === 0 ? "md:col-span-2" : undefined}
-            >
-              <ProjectCard project={project} index={i + 1} featured={i === 0} />
+            <BlurFade key={project.slug} delay={0.05 * i} inView>
+              <ProjectCard project={project} index={i + 1} priority={i < 2} />
             </BlurFade>
           ))}
         </div>
@@ -219,56 +225,5 @@ function Section({
         {children}
       </section>
     </BlurFade>
-  )
-}
-
-function ProjectCard({
-  project,
-  index,
-  featured,
-}: {
-  project: Project
-  index: number
-  featured?: boolean
-}) {
-  return (
-    <a
-      href={project.link}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group block rounded-xl bg-card p-2 ring-1 ring-inset ring-border transition-[box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_32px_-12px_rgb(0_0_0/0.18)]"
-    >
-      <div
-        className={`relative overflow-hidden rounded-lg bg-muted ring-1 ring-foreground/5 ${
-          featured ? "aspect-[16/9] md:aspect-[21/9]" : "aspect-[16/10]"
-        }`}
-      >
-        <Image
-          src={project.image}
-          alt={`${project.title} — ${project.summary}`}
-          fill
-          sizes={featured ? "(min-width: 768px) 944px, 100vw" : "(min-width: 768px) 470px, 100vw"}
-          className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.02]"
-          priority={featured}
-        />
-        <span className="absolute right-3 top-3 flex h-7 w-7 translate-y-1 items-center justify-center rounded-full bg-background/80 text-foreground opacity-0 shadow-sm backdrop-blur transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-          <ArrowUpRight className="h-3.5 w-3.5" />
-        </span>
-      </div>
-      <div className="px-2 pb-1.5 pt-3">
-        <div className="flex items-baseline justify-between gap-4">
-          <h3 className="flex items-baseline gap-2.5 text-[15px] font-medium">
-            <span className="font-mono text-[11px] font-normal text-muted-foreground">
-              {String(index).padStart(2, "0")}
-            </span>
-            {project.title}
-          </h3>
-          <span className="eyebrow truncate text-[10px]">{project.tag}</span>
-        </div>
-        <p className="mt-1 pl-[26px] text-[13px] leading-relaxed text-muted-foreground">
-          {project.summary}
-        </p>
-      </div>
-    </a>
   )
 }
