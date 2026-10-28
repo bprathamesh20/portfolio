@@ -1,0 +1,42 @@
+---
+title: "AI Expat Jobs"
+tag: "Visa-sponsor job board"
+summary: "AI jobs in the UK and the Netherlands, only at employers that can actually sponsor a visa. Rebuilt from live data every morning."
+description: "AI Expat Jobs lists AI, ML and data roles in the UK and the Netherlands, only at employers on the official visa-sponsor registers. A daily Python pipeline reads employers' job boards, matches them to the Home Office and IND registers, and uses Claude Haiku to read each posting."
+year: "2026"
+role: "Solo · product, data & engineering"
+image: "/projects/ai-expat-jobs.jpg"
+imageAlt: "AI Expat Jobs home page: AI jobs at licensed visa sponsors, with 429 open roles at 80 employers, 387 in the UK and 59 in the Netherlands"
+live: "https://aiexpatjobs.com"
+source: []
+stack: ["Python", "Astro", "Tailwind CSS", "Cloudflare Pages", "Cloudflare D1 & KV", "GitHub Actions", "Claude Haiku", "beehiiv"]
+order: 2
+---
+
+## Overview
+
+[AI Expat Jobs](https://aiexpatjobs.com) is a job board for AI, ML and data roles in the UK and the Netherlands, with one rule: **every employer on it is on an official visa-sponsor register**. It's the UK Home Office register of licensed sponsors or the Dutch IND register of recognised sponsors. In late October 2026 it listed about 430 open roles at 80 employers, all rebuilt from live data every morning.
+
+## The problem
+
+"Companies that sponsor visas" lists are everywhere, but they only tell you who holds a licence. They don't tell you which of today's jobs are open, or whether a particular posting rules sponsorship out. For an engineer applying from abroad, the expensive surprise is finding "must already have the right to work in the UK" in the last line of a posting, or learning it two interviews in.
+
+Both halves of the answer are public: the registers, and the employers' own job boards. Nobody was joining them for AI roles.
+
+## How it works
+
+1. **Read the job boards.** Every morning a GitHub Actions job reads the public APIs of about 150 AI employers' applicant tracking systems (Greenhouse, Ashby, Lever, SmartRecruiters and others), and keeps AI, ML, forward-deployed and data roles in the UK and the Netherlands.
+2. **Check the registers.** The same job downloads the full UK register and the Dutch IND list, about 13,000 recognised sponsors, and matches each employer by its legal entity name. Brand names rarely match legal names, so every match is reviewed rather than trusted to fuzzy matching.
+3. **Read each posting.** Claude Haiku reads only postings it hasn't seen before. It returns structured notes: stated pay, whether the posting mentions sponsorship or relocation, whether Dutch is required, and seniority. Results are cached by URL, so a posting is never paid for twice.
+4. **Build and deploy.** The pipeline writes JSON, Astro builds a static site with a page for every employer, job, role and city (around 650 pages), and it deploys to Cloudflare Pages.
+
+![An AI Expat Jobs employer page for Anthropic: on the UK sponsor register with an A rating and its routes, the date it was checked, and how many of its 17 open roles mention visa sponsorship](/projects/ai-expat-jobs-employer.jpg)
+
+## Engineering decisions
+
+- **Don't trust the model when it removes things.** A posting is hidden for saying "we can't sponsor" only if the sentence the model quoted is actually found in the posting text. Being wrongly left out costs a job seeker more than an extra listing does.
+- **The deploy refuses to ship bad data.** If today's job count falls below 60% of yesterday's, or more than 30% of job boards fail, the run stops without deploying and yesterday's site stays up.
+- **Cheap by design.** Tagging costs about $0.0004 a posting; tagging the first 460 postings cost 17 cents. Hosting is static, so it's free.
+- **Say exactly what was checked.** Being on a register means an employer *can* sponsor, not that every role will. Every employer page shows the register entry, its rating and routes, and the date it was checked, and keeps that separate from what each posting says.
+- **No copied descriptions.** Job pages are built from facts about the posting and the register entry, and link back to the employer's own posting.
+- **Privacy-first analytics.** Sign-ups go to a Cloudflare Pages Function, and apply clicks are logged anonymously in D1, with no cookies and no personal data. The weekly email, *Transfer Learning*, runs on beehiiv.
